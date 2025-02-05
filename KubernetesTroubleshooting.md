@@ -1,6 +1,6 @@
 
 ### 1. **What steps would you take to troubleshoot a Kubernetes pod stuck in the 'ImagePullBackOff' state?**
-- **Ideal Answer**:  
+- **Answer**:
   If a pod is stuck in the 'ImagePullBackOff' state, I would follow these steps:
   1. **Check the pod logs** using `kubectl logs <pod-name>` to identify any specific error messages related to the image pull.
   2. Use `kubectl describe pod <pod-name>` to review the events section, which often provides information about why the image pull is failing.
@@ -16,7 +16,7 @@
 ---
 
 ### 2. **How would you troubleshoot a Kubernetes deployment where the pods are repeatedly crashing?**
-- **Ideal Answer**:  
+- **Answer**:
   When pods are repeatedly crashing, I would:
   1. Check the pod's logs (`kubectl logs <pod-name>`) to understand the cause of the crash (e.g., application error, resource limits exceeded).
   2. Review the deployment YAML for issues like incorrect resource requests/limits or environment variable misconfigurations.
@@ -32,7 +32,7 @@
 ---
 
 ### 3. **What would you do if your Kubernetes cluster's nodes are underutilized but the pods are still not being scheduled properly?**
-- **Ideal Answer**:  
+- **Answer**:
   In this situation, I would:
   1. Check the pod's resource requests and limits. If they are too high, Kubernetes may not be able to schedule them even though there are available resources.
   2. Use `kubectl describe node <node-name>` to check the node’s resource availability and status.
@@ -48,7 +48,7 @@
 ---
 
 ### 4. **How do you handle Kubernetes network connectivity issues between pods?**
-- **Ideal Answer**:  
+- **Answer**:
   To troubleshoot network connectivity issues between pods, I would:
   1. Verify the **network policies** (if any) to ensure that they are not restricting traffic between pods.
   2. Use `kubectl get pods -o wide` to check the pod IP addresses and ensure they are in the correct network space.
@@ -65,7 +65,7 @@
 ---
 
 ### 5. **What steps would you take to investigate why a Kubernetes service is not receiving traffic from outside the cluster?**
-- **Ideal Answer**:  
+- **Answer**:
   When a service is not receiving external traffic, I would:
   1. Ensure the **Service** is correctly defined with the appropriate **type** (e.g., `LoadBalancer`, `NodePort`, or `ClusterIP`) to expose it externally.
   2. Verify the **Ingress controller** is correctly configured to route traffic to the service.
@@ -82,7 +82,7 @@
 ---
 
 ### 6. **How would you troubleshoot a pod that is failing to start due to insufficient resources?**
-- **Ideal Answer**:  
+- **Answer**:
   If a pod is failing to start due to insufficient resources, I would:
   1. Use `kubectl describe pod <pod-name>` to inspect the events and look for errors like "Insufficient CPU" or "Insufficient Memory."
   2. Check the **resource requests and limits** in the pod’s configuration. If they are set too high, the pod might not get scheduled on any node.
@@ -98,7 +98,7 @@
 ---
 
 ### 7. **What would you check if your Kubernetes cluster is experiencing slow response times?**
-- **Ideal Answer**:  
+- **Answer**:
   If the Kubernetes cluster is experiencing slow response times, I would:
   1. Start by checking **pod logs** for errors or warnings that might indicate application-level issues.
   2. Monitor the **CPU and memory usage** of nodes and pods using `kubectl top nodes` and `kubectl top pods` to identify resource bottlenecks.
@@ -114,7 +114,7 @@
 ---
 
 ### 8. **What would you do if a scheduled job in Kubernetes is failing consistently?**
-- **Ideal Answer**:  
+- **Answer**:
   If a scheduled job is failing, I would:
   1. Inspect the job logs using `kubectl logs <job-name>` to look for any application-specific errors.
   2. Check the **job definition** and ensure that the job is configured correctly (e.g., correct image, command, etc.).
