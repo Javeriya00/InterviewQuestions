@@ -1,6 +1,3 @@
-Here’s a clean, structured format for CI/CD for Java Maven Builds with GitLab, following the same style as before:
-
----
 
 # CI/CD for Java Maven Builds Interview Questions
 

@@ -4,8 +4,6 @@ If you find this useful, give it a ⭐! Contributions are most welcome. 🚀
 
 ---
 
-## **Basic Questions**
-
 ### **What is Terraform, and why is it used?**
 Terraform is an Infrastructure as Code (IaC) tool developed by HashiCorp that allows users to define and provision infrastructure using a declarative configuration language (HCL - HashiCorp Configuration Language). It enables automation, consistency, and repeatability in deploying cloud resources across various providers like AWS, Azure, and Google Cloud.
 
