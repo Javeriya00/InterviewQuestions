@@ -107,3 +107,91 @@
   - Automate configuration updates across environments to reduce human error.
 
 ---
+Certainly! Here are additional questions that could be relevant for interviews, especially given your experience with Kubernetes, Istio, CI/CD, and cloud migrations. These questions cover other aspects of your project that weren't discussed earlier:
+---
+
+### **1. How do you ensure high availability in Kubernetes and how was it handled in your project?**
+
+**Answer**:  
+High availability (HA) in Kubernetes is crucial for ensuring that applications are resilient to failures. In my project, we achieved HA by:
+- **Replicas**: Ensuring that each deployment has multiple replicas of the pod, typically in a **StatefulSet** or **Deployment**, so that if one pod fails, the others continue to serve traffic.
+- **Pod Anti-Affinity**: Configuring **PodAntiAffinity** rules to spread pods across different nodes to prevent all replicas from being on the same node.
+- **Horizontal Pod Autoscaler**: Using Kubernetes **HPA** to automatically scale pods based on resource utilization metrics, ensuring that the application can handle varying traffic loads.
+- **Disruption Budgets**: Configuring **PodDisruptionBudgets (PDBs)** to prevent too many pods from being evicted during maintenance activities.
+
+In my Azure Kubernetes Service (AKS) setup, these practices, along with proper network policies, ensured that applications remained highly available even during node failures or scaling events.
+
+---
+
+### **2. How do you manage Kubernetes resources across multiple environments (e.g., dev, staging, production)?**
+
+**Answer**:  
+In my project, we used **Helm charts** to manage Kubernetes resources across multiple environments. Helm made it easier to manage environment-specific configurations by parameterizing values (e.g., database URLs, secrets, replica counts) in **values.yaml** files for different environments. 
+
+For example, we had separate **values-dev.yaml**, **values-staging.yaml**, and **values-prod.yaml** files, each containing configuration values tailored to the environment they represented.
+
+Additionally, we used **Kustomize** for managing different overlays, ensuring that Kubernetes manifests were not duplicated but customized for each environment. This helped us to manage resources more efficiently across Dev, IT, UAT, and Production environments.
+
+---
+
+### **3. Can you describe your experience with Helm charts and how you used them for deployments in your project?**
+
+**Answer**:  
+I extensively used **Helm charts** to package and deploy Kubernetes applications. Helm allowed me to define Kubernetes resources such as deployments, services, ConfigMaps, and Secrets in reusable templates, making it easier to manage applications across environments. For instance, in my migration project, I created Helm charts to define services like database deployments, application workloads, and networking resources.
+
+The key benefits we derived from using Helm in my project were:
+- **Consistency**: Helm provided a consistent way to deploy the same set of resources across environments.
+- **Parameterization**: By using Helm’s templating mechanism, we could inject environment-specific variables (e.g., database connections, secrets) without modifying the actual Kubernetes manifest.
+- **Version Control**: Helm helped in versioning our deployments, making rollbacks and updates smoother.
+
+I also used **Helm hooks** for pre-deployment and post-deployment tasks like database migrations and other setup activities.
+
+---
+
+### **4. How do you manage secrets in Kubernetes, and what tools did you use in your project?**
+
+**Answer**:  
+In Kubernetes, managing secrets is critical to ensuring the confidentiality of sensitive data. In my project, we used the following approaches:
+- **Kubernetes Secrets**: For storing sensitive information like API keys, database passwords, etc., we used **Kubernetes Secrets**. These secrets were encrypted at rest using Kubernetes' default encryption providers.
+- **HashiCorp Vault**: We integrated **HashiCorp Vault** with Kubernetes to manage and inject secrets dynamically into pods using **Vault Kubernetes Auth**. This allowed us to securely manage and access secrets without storing them directly in Kubernetes.
+- **Azure Key Vault**: For cloud-native secret management, we used **Azure Key Vault** to store secrets for services running on **Azure Kubernetes Service (AKS)**. Azure’s integration with Kubernetes allowed for secure access to secrets in the AKS environment.
+  
+For CI/CD pipelines, we used GitLab’s **Secret Management** capabilities to securely manage credentials and access tokens required during deployments.
+
+---
+
+### **5. Can you explain the difference between StatefulSets and Deployments in Kubernetes? When would you choose one over the other?**
+
+**Answer**:  
+- **Deployments**: Used for stateless applications, where the individual pod’s state does not need to be preserved. Deployments ensure that a specified number of replicas of a pod are always running, and they are best suited for stateless workloads like web services or APIs.
+  
+- **StatefulSets**: Used for stateful applications where each pod needs a unique identity or persistent storage (e.g., databases). StatefulSets provide a stable, unique identity to each pod and guarantee that pods are created and terminated in a specific order.
+
+In my project, I used **StatefulSets** for applications like databases where the state needs to persist across pod restarts, and **Deployments** for stateless microservices that don’t need to maintain any state across pods.
+
+---
+
+### **6. How do you monitor and log Kubernetes workloads, and what tools did you use in your project?**
+
+**Answer**:  
+Monitoring and logging are critical to ensuring the health and performance of Kubernetes applications. In my project:
+- **Logging**: We used **Splunk** to collect logs from our applications and Kubernetes nodes. Logs were forwarded using **Fluentd** or **Filebeat** agents running as DaemonSets in the cluster. Splunk allowed us to centralize logs, apply filters, and set up alerting for specific events (e.g., application errors, failed pods).
+  
+- **Monitoring**: We used **Prometheus** for collecting metrics from Kubernetes components and applications. Prometheus scraped metrics from the Kubernetes API server, nodes, and application pods. For visualization, we used **Grafana**, which was integrated with Prometheus to display health metrics, CPU/memory usage, pod status, and custom application metrics.
+
+- **Istio Telemetry**: Since we used Istio in our project, we also used Istio's built-in **telemetry** features for distributed tracing, metrics, and logging. We integrated Istio with **Prometheus**, **Grafana**, and **Jaeger** for a comprehensive observability solution.
+
+---
+
+### **7. What is your experience with container security in a CI/CD pipeline, and what tools did you use for scanning?**
+
+**Answer**:  
+In my project, security was a top priority in our CI/CD pipeline. We used a combination of tools for static code analysis, container image vulnerability scanning, and dependency scanning:
+- **SonarQube**: Used for static code analysis and to identify potential bugs, code smells, and security vulnerabilities in custom code.
+- **Synopsys, Fortify, BlackDuck**: Integrated for scanning dependencies and container images for vulnerabilities. These tools helped in identifying known vulnerabilities (e.g., CVEs) in third-party libraries.
+- **Twistlock (Prisma Cloud)**: Used for container image vulnerability scanning. Twistlock was integrated into the pipeline to scan Docker images for known vulnerabilities before they were pushed to **JFrog Artifactory**.
+- **Kaniko**: Used for building Docker images in the pipeline in a secure manner, without requiring privileged access.
+
+These tools were incorporated into our **GitLab CI/CD pipeline** to ensure that every commit was scanned for security risks before being deployed to Kubernetes.
+
+---
